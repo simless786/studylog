@@ -1,0 +1,155 @@
+#  C언어 - 구조체 (Structure)
+
+---
+
+##  구조체란?
+
+- 서로 다른 **자료형**을 하나로 묶을 수 있는 사용자 정의 자료형
+- 관련된 데이터를 하나의 단위로 표현할 때 사용함 (예: 학생, 좌표, 책 등)
+
+```c
+struct Student {
+    int id;
+    char name[20];
+    float grade;
+};
+```
+
+> 구조체는 **여러 개의 변수(멤버 변수)**를 그룹화할 수 있음
+
+---
+
+## 🔹 구조체 변수 선언
+
+```c
+struct Student s1;    // 일반 선언
+```
+
+### 🔸 동시에 선언하기
+```c
+struct Student {
+    int id;
+    char name[20];
+    float grade;
+} s1, s2;
+```
+
+---
+
+## 🔹 구조체 멤버 접근
+
+- 구조체 변수의 멤버에 접근할 때는 **`.` (점 연산자)** 사용
+
+```c
+s1.id = 1001;
+strcpy(s1.name, "홍길동");
+s1.grade = 4.3;
+```
+
+---
+
+##  구조체 배열
+
+- 구조체도 배열처럼 여러 개 선언 가능
+
+```c
+struct Student class[30];
+class[0].id = 1001;
+```
+
+---
+
+##  구조체와 함수
+
+### 🔸 구조체를 함수에 인자로 전달
+
+```c
+void printStudent(struct Student s) {
+    printf("%d %s %.2f", s.id, s.name, s.grade);
+}
+```
+
+- 구조체는 기본적으로 **값에 의한 호출(Call by value)**  
+  → 복사본 전달됨
+
+---
+
+### 🔸 포인터로 전달 (Call by Reference)
+
+```c
+void updateGrade(struct Student *s) {
+    s->grade = 4.5;
+}
+```
+
+> `s->grade` 는 `(*s).grade` 와 같은 의미
+
+---
+
+##  구조체 안에 구조체
+
+```c
+struct Date {
+    int year, month, day;
+};
+
+struct Student {
+    int id;
+    char name[20];
+    struct Date birth;
+};
+```
+
+접근 예시:
+```c
+s1.birth.year = 2004;
+```
+
+---
+
+##  typedef를 이용한 구조체 간편 선언
+
+```c
+typedef struct Student {
+    int id;
+    char name[20];
+} Student;
+
+Student s1;
+```
+
+> `struct` 키워드 없이 바로 사용 가능
+
+---
+
+##  구조체 포인터
+
+```c
+Student s1 = {1001, "Kim"};
+Student *p = &s1;
+
+printf("%s", p->name);  // 구조체 포인터는 -> 연산자 사용
+```
+
+---
+
+##  구조체 초기화
+
+```c
+struct Student s1 = {1001, "Hong", 4.1};
+```
+
+---
+
+##  요약 정리
+
+| 개념 | 설명 |
+|------|------|
+| 구조체 정의 | `struct 이름 { 멤버들 };` |
+| 멤버 접근 | `structVar.member` 또는 `ptr->member` |
+| 함수 인자 전달 | 기본은 복사(Call by Value), 포인터로 전달 시 원본 수정 |
+| 구조체 배열 | 구조체 변수 여러 개 선언 |
+| typedef | `struct` 생략 가능하게 함 |
+
+
+
